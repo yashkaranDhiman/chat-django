@@ -1,0 +1,26 @@
+<div class="room-body">
+    <div id="create">
+        <h2>Rooms list</h2>
+        <a class="create-room" href="{% url 'create-room' %}"><button class="btn btn-primary">Create Room</button></a>
+    </div>
+    {% for room in rooms %}
+    {% if request.user == room.host %}
+    <a class="edits" href="update-room/{{room.id}}">Update?</a>
+    <a class="edits" href="delete-room/{{room.id}}">Delete?</a>
+    {% endif %}
+
+    <h3 class="nameofroom">
+        {% if request.user == room.host %}
+        <div><a href='{% url "user-profile" room.host.id %}'><h2 id="isuser">@{{room.host.username}}</h2></a>
+            <a href="/room/{{room.id}}">{{room.name}}</a>
+           <h4 class="nameofroom subhead">({{room.topic.name}})</h4>
+       </div>
+         {% else %}
+        <div><a href='{% url "user-profile" room.host.id %}'><h2 class="uzernam">@{{room.host.username}}</h2></a>
+             <a href="/room/{{room.id}}">{{room.name}}</a>
+            <h4 class="nameofroom subhead">({{room.topic.name}})</h4>
+        </div>
+        {% endif %}
+    </h3>
+    {% endfor %}
+</div>

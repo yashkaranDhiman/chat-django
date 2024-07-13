@@ -1,0 +1,106 @@
+{% extends "main.html" %}
+
+{% block content %}
+<style>
+    .room-container{
+        color: white;
+        display: flex;
+    }
+    small{
+        opacity: 0.7;
+    }
+    #del-btn{
+        float: right;
+        margin-right: 30px;
+    }
+   
+    #room-name{
+        font-size: 50px;
+    }
+    .comment-form{
+        position: fixed;
+        bottom: 10%;
+        width: 100vw;
+        display: flex;
+
+    }
+    .comment-form input{
+        width: 92vw;
+        padding: .6vw 1vw;
+        padding-right: 0;
+        font-size: 1vw;
+        display: flex;
+        justify-content: center;
+        outline: none;
+        align-items: center;
+    }
+    .comment-form button{
+        display: flex;
+        background-color: #C100C1;
+        border: none;
+        outline: none;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1vw;
+        padding: .8vw;
+        padding-left: 1vw;
+    }
+    #desc-head{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .comment-wrapper{
+        width: 85vw;
+    }
+</style>
+<div class="room-container">
+    
+    <div class="comment-wrapper">
+        <div id="desc-head">
+            <h1 id="room-name">{{room.name}}</h1>
+            <p>{{room.desc}}</p>
+        </div>
+
+        <h4>Conversations:</h4>
+        <hr>
+        {% for mssg in room_messages %}
+        <div>
+            <big>@{{mssg.user}}</big> <small>{{mssg.created|timesince}} ago</small>
+            {% if request.user == mssg.user %}
+            <a id="del-btn" href="{% url "delete-comment" mssg.id %}">delete</a>
+            {% endif %}
+            <p>{{mssg.body}}</p>
+            <br>
+        </div>
+        {% endfor %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="participants">
+        <h1>participants</h1><hr>
+        {% for usr in participants %}
+        <div>
+            <p>@{{usr.username}}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    {% if request.user.is_authenticated %}
+        <form action="" method="post" class="comment-form">
+            {% csrf_token %}
+            <input type="text" name="body" placeholder="write somthing here ..."></input>
+            <button type="submit">
+                <span>send</span>  <i class="ri-send-plane-2-fill"></i>
+            </button>
+        </form>
+{% endif %}
+</div>
+<br>
+{% endblock content %}

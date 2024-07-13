@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% block content %}
+<style>
+    #frinds-btn{
+        float: right;
+    }
+</style>
+<div class="container">
+    {% for uzr in all_friends %}
+    <div class="card w-75 my-1">
+        <div class="card-body">
+          <h5 class="card-title"><img src="" alt="mm"> {{uzr.username}} <button class="btn btn-primary" data-friend="{{uzr.id}}" id="frinds-btn">Add friend</button></h5>
+        </div>
+      </div>
+      {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+<h2>Browse Topics</h2>
+<h5>({{room_count}} rooms available)</h5><br>
+<div class="room-alone">
+<div class="dot"></div><a class="browse-topics" href="/?q=all">&nbsp;All</a><br>
+</div>
+{% for topic in topics %}
+<div class="room-alone">
+  <div class="dot"></div> <a class="browse-topics" href="/?q={{topic.name}}">&nbsp;{{topic.name|title}}</a><br>
+  </div>
+{% endfor %}
+<div class="room-alone">
+   <a href='{% url "create-room" %}'><div class="plus">+</div></a><br>
+  </div>
+
+<div id="open-up">
+  <i class="ri-arrow-right-s-line"></i></div>
